@@ -1,0 +1,32 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(npm run *)",
+      "Bash(pnpm *)",
+      "Bash(yarn *)",
+      "Bash(npx tsc *)",
+      "Bash(npx eslint *)",
+      "Bash(npx prettier *)",
+      "Bash(npx jest *)",
+      "Bash(npx vitest *)",
+      "Bash(npx playwright *)",
+      "Bash(sh validators/pre-commit.sh)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(curl * | sh)",
+      "Bash(sudo *)"
+    ]
+  },
+  "context_files": [
+    "CLAUDE.md",
+    "docs/architecture.md",
+    "docs/coding-standards.md",
+    "rules/always-on.md",
+    "rules/git.md",
+    "rules/testing.md",
+    "rules/security.md"
+  ]
+}
