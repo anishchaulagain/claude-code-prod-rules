@@ -10,7 +10,13 @@
 - Branches: ≥85%
 - Functions: ≥90%
 
-## Naming convention
+## File & Folder conventions
+- **Unit tests**: Colocate with source files. `src/user.ts` -> `src/user.test.ts` (or `.spec.ts`).
+- **Integration tests**: Place in `tests/integration/`. Name files `[feature].integration.test.ts`.
+- **E2E tests**: Place in `tests/e2e/`. Name files `[feature].e2e.test.ts`.
+- **Support files**: Place factories in `tests/factories/` and global mocks in `tests/mocks/`.
+
+## Test description naming
 ```
 describe('<ModuleName>', () => {
   describe('<methodName>', () => {
