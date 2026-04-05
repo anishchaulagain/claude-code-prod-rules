@@ -1,14 +1,14 @@
 # Testing rules
 
 ## Test pyramid (target ratios)
-- **Unit tests**: 70% — fast, isolated, mock external deps
-- **Integration tests**: 20% — test across boundaries (DB, API, service)
-- **E2E tests**: 10% — critical user journeys only
+- **Unit tests**: 90% — fast, isolated, mock external deps
+- **Integration tests**: 5% — test across boundaries (DB, API, service)
+- **E2E tests**: 5% — critical user journeys only
 
 ## Coverage thresholds (enforced in CI)
-- Statements: ≥80%
-- Branches: ≥75%
-- Functions: ≥80%
+- Statements: ≥90%
+- Branches: ≥85%
+- Functions: ≥90%
 
 ## Naming convention
 ```
