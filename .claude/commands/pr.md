@@ -2,7 +2,7 @@
 
 ## Steps Claude MUST follow in order:
 
-1. Run `git diff main...HEAD --stat` to understand scope.
+1. Run `git diff develop...HEAD --stat` to understand scope.
 2. Run `sh validators/pre-commit.sh`. If it fails, fix all issues first. Do not proceed.
 3. Run through `validators/pr-checklist.md` line by line. Self-grade each item.
 4. If any BLOCKER item is unchecked, fix it. Do not raise the PR.
