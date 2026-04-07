@@ -189,23 +189,55 @@ Claude checks backward compatibility, writes safe migration, plans backfill.
 Run manually or wire into git hooks:
 
 ```bash
-# Manual
+# Manual — full check
 sh validators/pre-commit.sh
+
+# Manual — staged files only (faster)
+sh validators/pre-commit.sh --staged
 
 # As a git hook
 cp validators/pre-commit.sh .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit
 ```
 
-Runs: TypeScript check → ESLint → Prettier → Vitest with coverage.
+Runs: TypeScript check → ESLint → Prettier → security audit → tests (auto-detects Vitest or Jest).
+
+#### Rule File Linter
+Validates that all cross-references between CLAUDE.md, settings.json, and rule/agent/workflow files are intact:
+
+```bash
+sh validators/lint-rules.sh
+```
+
+Run this after adding or renaming any rule, workflow, or agent file.
 
 #### PR Checklist
 Used automatically by the `/pr` command. Claude grades each item and blocks if any BLOCKER item fails.
 
 ---
 
-### `docs/decisions/` — Architecture Decision Records
+### `templates/` — Project Scaffolds
 
+#### `.env.example`
+Copy into your project root as a starting point for environment variables:
+
+```bash
+cp templates/.env.example .env.example
+```
+
+Documents common vars (database, auth, external APIs) without values. Referenced by `rules/always-on.md` and `rules/security.md`.
+
+---
+
+### `docs/` — Project Documentation
+
+#### `docs/architecture.md`
+Customize this for your project. Claude reads it every session to understand your system structure, tech stack, and key data flows.
+
+#### `docs/coding-standards.md`
+Project-specific naming conventions, import order, function patterns, and domain vocabulary. Supplements the rules in `rules/`.
+
+#### `docs/decisions/` — Architecture Decision Records
 When making architectural decisions:
 
 ```
@@ -234,3 +266,4 @@ Claude uses the template in `docs/decisions/000-template.md` to document the dec
 | Debug an issue | `Act as the debugger agent. <describe symptom>` |
 | Architectural decision | `Create an ADR for choosing between X and Y` |
 | Run quality checks | `Run sh validators/pre-commit.sh` |
+| Validate rule integrity | `Run sh validators/lint-rules.sh` |
