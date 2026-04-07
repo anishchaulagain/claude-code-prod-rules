@@ -1,3 +1,7 @@
+---
+description: Emergency production fix workflow with expedited review and deploy
+---
+
 # Workflow: Hotfix (production emergency)
 
 ## Trigger

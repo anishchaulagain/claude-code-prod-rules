@@ -16,6 +16,7 @@ cp -r /tmp/rules/agents ./agents
 cp -r /tmp/rules/workflows ./workflows
 cp -r /tmp/rules/validators ./validators
 cp -r /tmp/rules/docs ./docs
+cp -r /tmp/rules/templates ./templates
 ```
 
 Claude Code automatically reads `CLAUDE.md` from the project root and `.claude/settings.json` on every session start. No configuration needed.

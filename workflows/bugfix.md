@@ -1,3 +1,7 @@
+---
+description: Reproduce-first workflow for fixing a bug with minimal change
+---
+
 # Workflow: Fix a bug
 
 ## Steps

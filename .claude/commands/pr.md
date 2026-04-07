@@ -2,12 +2,13 @@
 
 ## Steps Claude MUST follow in order:
 
-1. Run `git diff develop...HEAD --stat` to understand scope.
-2. Run `sh validators/pre-commit.sh`. If it fails, fix all issues first. Do not proceed.
-3. Run through `validators/pr-checklist.md` line by line. Self-grade each item.
-4. If any BLOCKER item is unchecked, fix it. Do not raise the PR.
-5. Read the commit messages on this branch. Identify the ticket number (e.g. ENG-1234).
-6. Generate the PR using this exact structure:
+1. Detect the base branch: run `git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'` to find the default branch (usually `main` or `develop`). If that fails, try `develop` then `main`.
+2. Run `git diff <base-branch>...HEAD --stat` to understand scope.
+3. Run `sh validators/pre-commit.sh`. If it fails, fix all issues first. Do not proceed.
+4. Run through `validators/pr-checklist.md` line by line. Self-grade each item.
+5. If any BLOCKER item is unchecked, fix it. Do not raise the PR.
+6. Read the commit messages on this branch. Identify the ticket number (e.g. ENG-1234).
+7. Generate the PR using this exact structure:
 
 ---
 

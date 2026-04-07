@@ -1,3 +1,7 @@
+---
+description: Safe refactoring workflow — test-first, incremental, behavior-preserving
+---
+
 # Workflow: Refactor existing code
 
 ## Trigger

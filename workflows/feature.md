@@ -1,3 +1,7 @@
+---
+description: Step-by-step process for implementing a new feature from ticket to PR
+---
+
 # Workflow: Implement a feature
 
 ## Trigger

@@ -1,3 +1,7 @@
+---
+description: Safe database schema changes with backward compatibility and backfill
+---
+
 # Workflow: Database migration
 
 ## Trigger

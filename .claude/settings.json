@@ -1,5 +1,5 @@
 {
-  "model": "claude-sonnet-4-20250514",
+  "_note": "Remove or update the model field below to use the latest version. It is not required.",
   "permissions": {
     "allow": [
       "Bash(git add *)",
@@ -19,6 +19,8 @@
       "Bash(git push origin fix/*)",
       "Bash(git push origin hotfix/*)",
       "Bash(git push origin chore/*)",
+      "Bash(git push origin docs/*)",
+      "Bash(git push origin perf/*)",
       "Bash(git push origin refactor/*)",
       "Bash(npm run *)",
       "Bash(pnpm *)",
