@@ -76,16 +76,12 @@ All files listed in `.claude/settings.json` → `context_files` are loaded autom
   "rules/git.md",
   "rules/testing.md",
   "rules/security.md",
-  "rules/error-handling.md",
-  "rules/logging.md",
-  "rules/api-design.md",
-  "rules/database.md",
-  "rules/performance.md",
-  "rules/accessibility.md"
+  ...
+  "rules/stacks/typescript.md" // Dynamically injected based on stack!
 ]
 ```
 
-**You don't invoke these** — Claude reads them and follows them in every response.
+**You don't invoke these** — Claude reads them and follows them in every response. Note that `init.sh` automatically tailors this list to your codebase's tech stack (e.g. injecting `rules/stacks/python.md` instead of TypeScript).
 
 ---
 

@@ -31,6 +31,7 @@ cp -r /tmp/rules/workflows ./workflows
 cp -r /tmp/rules/validators ./validators
 cp -r /tmp/rules/docs ./docs
 cp -r /tmp/rules/templates ./templates
+cp /tmp/rules/init.sh ./init.sh
 
 # Remove the temporary directory
 rm -rf /tmp/rules

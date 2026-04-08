@@ -11,24 +11,22 @@
 - Functions: ≥90%
 
 ## File & Folder conventions
-- **Unit tests**: Colocate with source files. `src/user.ts` -> `src/user.test.ts` (or `.spec.ts`).
+- **Unit tests**: Colocate with source files (e.g., `src/user.ts` -> `src/user.test.ts` or `test_user.py`).
 - **Integration tests**: Place in `tests/integration/`. Name files `[feature].integration.test.ts`.
 - **E2E tests**: Place in `tests/e2e/`. Name files `[feature].e2e.test.ts`.
 - **Support files**: Place factories in `tests/factories/` and global mocks in `tests/mocks/`.
 
 ## Test description naming
-```
-describe('<ModuleName>', () => {
-  describe('<methodName>', () => {
-    it('should <expected behavior> when <condition>', () => { ... })
-  })
-})
+```text
+[ModuleName]
+  [methodName]
+    should [expected behavior] when [condition]
 ```
 
 ## Rules
-- Tests must be deterministic. No `Date.now()`, `Math.random()`, or network calls without mocking.
+- Tests must be deterministic. No system clocks (e.g., `Date.now()`), random generators (e.g., `Math.random()`), or network calls without mocking.
 - Each test has exactly one assertion focus. Multiple `expect()` calls are fine when they test the same concept.
-- Use `beforeEach` for setup, not `beforeAll` (avoids state bleed).
+- Use per-test hook setup (e.g., `beforeEach`/`setUp`) rather than suite-level hooks (avoids state bleed).
 - Mock at the boundary (module interface), not deep inside implementation.
 - Factories over fixtures for test data — keep them in `tests/factories/`.
 - A test that always passes is worse than no test. Assert on the thing that can break.
@@ -61,11 +59,11 @@ describe('<ModuleName>', () => {
 ## Mocking boundaries
 
 ### What to mock
-- External HTTP APIs → use `msw` or `nock`
+- External HTTP APIs (use a mocking tool at the HTTP protocol layer)
 - Database → mock the repository layer, not the ORM itself
-- File system → mock `fs` operations at the service boundary
-- Time → use `vi.useFakeTimers()` / `jest.useFakeTimers()`
-- Environment variables → set in `beforeEach`, restore in `afterEach`
+- File system → mock filesystem operations at the service boundary
+- Time → use fake timers provided by the test runner
+- Environment variables → set in setup hooks, restore in teardown hooks
 
 ### What NOT to mock
 - The module you're testing (defeats the purpose)
@@ -73,8 +71,8 @@ describe('<ModuleName>', () => {
 - Type definitions or interfaces
 
 ## CI-specific behavior
-- Always run tests with `--ci` flag (disables interactive watch mode).
-- Enable parallel test execution where possible (`--pool=threads` in Vitest).
+- Always run tests with the equivalent of a `--ci` flag (disables interactive mode).
+- Enable parallel test execution where possible.
 - Generate coverage reports in CI (Cobertura/LCOV format for PR comments).
 - Fail the pipeline if coverage drops below thresholds.
 - Cache `node_modules` to speed up CI test runs.
@@ -91,8 +89,8 @@ describe('<ModuleName>', () => {
 
 ## What NOT to do in tests
 - ❌ Test implementation details (private methods, internal state)
-- ❌ Use `sleep()` / `setTimeout()` for async waiting — use `waitFor()` or polling utilities
+- ❌ Use generic sleep commands for async waiting — use polling or specific `wait` utilities
 - ❌ Write tests that depend on execution order
 - ❌ Copy-paste test setups — extract to factories and helpers
 - ❌ Assert on error messages from third-party libraries (they change on upgrades)
-- ❌ Leave `describe.only` / `it.only` / `.skip` in committed code
+- ❌ Leave focused/skipped test markers (e.g. `.only` or `.skip`) in committed code

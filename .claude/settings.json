@@ -62,6 +62,7 @@
     "rules/api-design.md",
     "rules/database.md",
     "rules/performance.md",
-    "rules/accessibility.md"
+    "rules/accessibility.md",
+    "rules/stacks/typescript.md"
   ]
 }
