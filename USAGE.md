@@ -151,6 +151,12 @@ Gets you a systematic hypothesis-driven investigation instead of random guessing
 
 Reference workflows when starting a task:
 
+#### Project Onboarding & Initialization
+```
+> Follow workflows/onboarding.md
+```
+Claude scans your current codebase, detects the tech stack (React, Python, Postgres, etc.), and automatically rewrites the rules and documentation to fit your project natively.
+
 #### New Feature
 ```
 > Follow workflows/feature.md to implement ENG-1234: Add rate limiting

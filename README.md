@@ -36,7 +36,12 @@ cp -r /tmp/rules/templates ./templates
 rm -rf /tmp/rules
 ```
 
-Once copied, Claude Code automatically reads `CLAUDE.md` and `.claude/settings.json` the next time you start a session in your project. No additional setup is required. 
+Once copied, Claude Code automatically reads `CLAUDE.md` and `.claude/settings.json` the next time you start a session in your project.
+
+To instantly adapt the copied rules to your specific codebase's tech stack and standards, run:
+```bash
+> Follow workflows/onboarding.md
+```
 
 See [USAGE.md](./USAGE.md) for full instructions on using global configurations or submodules.
 
