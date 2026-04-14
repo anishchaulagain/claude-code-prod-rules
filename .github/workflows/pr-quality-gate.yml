@@ -1,0 +1,84 @@
+# =============================================================================
+# PR Quality Gate — GitHub Actions
+# =============================================================================
+# Runs validators/pre-commit.sh on every pull request to ensure code quality.
+#
+# What it checks (auto-detected by pre-commit.sh):
+#   ✓ TypeScript type checking    (if tsconfig.json exists)
+#   ✓ ESLint linting              (if ESLint config exists)
+#   ✓ Prettier formatting         (if Prettier config exists)
+#   ✓ npm security audit          (if lockfile exists)
+#   ✓ Unit tests via vitest/jest  (if test runner detected)
+#
+# Customize:
+#   - Adjust `node-version` to match your project
+#   - Add environment variables via repository secrets
+#   - Extend the matrix for multi-version testing
+# =============================================================================
+
+name: PR Quality Gate
+
+on:
+  pull_request:
+    branches: [main, master, develop]
+  # Also run on pushes to main for post-merge verification
+  push:
+    branches: [main, master]
+
+# Cancel in-progress runs for the same PR
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality-gate:
+    name: Quality Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        node-version: [20]
+        # Uncomment to test across multiple Node versions:
+        # node-version: [18, 20, 22]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for accurate diffs
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          if [ -f "package-lock.json" ]; then
+            npm ci
+          elif [ -f "yarn.lock" ]; then
+            yarn install --frozen-lockfile
+          elif [ -f "pnpm-lock.yaml" ]; then
+            npm i -g pnpm && pnpm install --frozen-lockfile
+          else
+            echo "No lockfile found — skipping install"
+          fi
+
+      - name: Run quality gate
+        run: |
+          chmod +x validators/pre-commit.sh
+          sh validators/pre-commit.sh
+
+      - name: Upload coverage (if generated)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-node-${{ matrix.node-version }}
+          path: coverage/
+          if-no-files-found: ignore
+          retention-days: 7

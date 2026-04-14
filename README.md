@@ -31,6 +31,7 @@ cp -r /tmp/rules/workflows ./workflows
 cp -r /tmp/rules/validators ./validators
 cp -r /tmp/rules/docs ./docs
 cp -r /tmp/rules/templates ./templates
+cp -r /tmp/rules/.github ./.github
 cp /tmp/rules/init.sh ./init.sh
 
 # Remove the temporary directory
@@ -95,7 +96,8 @@ Claude automatically grades its own work against the `pr-checklist.md`, ensuring
 - `workflows/` - Standard Operating Procedures (SOPs) for features, bugfixes, refactoring, etc.
 - `agents/` - Specialized personas you can invoke (Planner, Debugger, Test Writer, Reviewer).
 - `validators/` - Scripts to execute CI validation before allowing PR actions.
-- `docs/` & `templates/` - Boilerplate examples like `.env.example` and ADR documentation.
+- `.github/workflows/` - GitHub Actions CI pipeline that runs quality gates on every PR.
+- `docs/` & `templates/` - Boilerplate examples like `.env.example`, ADR documentation, and CI configs (`templates/gitlab-ci.yml`).
 
 ## 🤝 Contributing
 Open source contributions are highly encouraged! Please ensure any new rules added to the `rules/` directory are also appended to the `context_files` array inside `.claude/settings.json`, and run `sh validators/lint-rules.sh` to ensure all links are valid before submitting a PR.
