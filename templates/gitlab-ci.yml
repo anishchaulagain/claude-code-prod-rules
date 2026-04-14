@@ -1,0 +1,58 @@
+# =============================================================================
+# PR Quality Gate — GitLab CI
+# =============================================================================
+# Runs validators/pre-commit.sh on every merge request.
+#
+# Copy this file to your project root as `.gitlab-ci.yml` and adjust as needed.
+#
+# What it checks (auto-detected by pre-commit.sh):
+#   ✓ TypeScript type checking    (if tsconfig.json exists)
+#   ✓ ESLint linting              (if ESLint config exists)
+#   ✓ Prettier formatting         (if Prettier config exists)
+#   ✓ npm security audit          (if lockfile exists)
+#   ✓ Unit tests via vitest/jest  (if test runner detected)
+# =============================================================================
+
+stages:
+  - quality
+
+quality-gate:
+  stage: quality
+  image: node:20-alpine
+  rules:
+    # Run on merge requests
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    # Run on pushes to default branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+  cache:
+    key:
+      files:
+        - package-lock.json
+        - yarn.lock
+        - pnpm-lock.yaml
+    paths:
+      - node_modules/
+    policy: pull-push
+
+  before_script:
+    - |
+      if [ -f "package-lock.json" ]; then
+        npm ci
+      elif [ -f "yarn.lock" ]; then
+        yarn install --frozen-lockfile
+      elif [ -f "pnpm-lock.yaml" ]; then
+        npm i -g pnpm && pnpm install --frozen-lockfile
+      else
+        echo "No lockfile found — skipping install"
+      fi
+
+  script:
+    - chmod +x validators/pre-commit.sh
+    - sh validators/pre-commit.sh
+
+  artifacts:
+    when: always
+    paths:
+      - coverage/
+    expire_in: 7 days

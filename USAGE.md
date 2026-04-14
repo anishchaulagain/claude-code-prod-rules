@@ -17,6 +17,7 @@ cp -r /tmp/rules/workflows ./workflows
 cp -r /tmp/rules/validators ./validators
 cp -r /tmp/rules/docs ./docs
 cp -r /tmp/rules/templates ./templates
+cp -r /tmp/rules/.github ./.github
 ```
 
 Claude Code automatically reads `CLAUDE.md` from the project root and `.claude/settings.json` on every session start. No configuration needed.
@@ -216,9 +217,25 @@ Run this after adding or renaming any rule, workflow, or agent file.
 #### PR Checklist
 Used automatically by the `/pr` command. Claude grades each item and blocks if any BLOCKER item fails.
 
----
+#### CI/CD Pipeline (GitHub Actions)
+The repo includes a ready-to-use GitHub Actions workflow at `.github/workflows/pr-quality-gate.yml` that runs `validators/pre-commit.sh` on every pull request. It is copied automatically with the Quick Start instructions.
 
-### `templates/` — Project Scaffolds
+The pipeline:
+- Installs dependencies (auto-detects npm/yarn/pnpm)
+- Runs the full quality gate (types → lint → format → audit → tests)
+- Uploads coverage reports as artifacts
+- Cancels redundant runs for the same PR
+
+No configuration needed — it works out of the box for any Node.js project.
+
+#### CI/CD Pipeline (GitLab CI)
+If your team uses GitLab, copy the template into your project root:
+
+```bash
+cp templates/gitlab-ci.yml .gitlab-ci.yml
+```
+
+This provides the same quality gate on merge requests with built-in dependency caching.
 
 #### `.env.example`
 Copy into your project root as a starting point for environment variables:
